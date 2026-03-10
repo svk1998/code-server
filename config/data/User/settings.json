@@ -1,0 +1,13 @@
+{
+  "chat.commandCenter.enabled": false,
+  "extensions.autoCheckUpdates": false,
+  "extensions.autoUpdate": false,
+  "remote.autoForwardPorts": false,
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "security.workspace.trust.enabled": true,
+  "security.workspace.trust.startupPrompt": "always",
+  "security.workspace.trust.untrustedFiles": "prompt",
+  "telemetry.telemetryLevel": "off",
+  "telemetry.feedback.enabled": false,
+  "update.mode": "none"
+}
