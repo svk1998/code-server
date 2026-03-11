@@ -13,7 +13,7 @@ services:
       - http_proxy=${HTTP_PROXY:-}
       - https_proxy=${HTTPS_PROXY:-}
       - no_proxy=${NO_PROXY:-127.0.0.1,localhost}
-      - HASHED_PASSWORD=${CODE_SERVER_HASHED_PASSWORD:?set CODE_SERVER_HASHED_PASSWORD in .env}
+      # - HASHED_PASSWORD=${CODE_SERVER_HASHED_PASSWORD:?set CODE_SERVER_HASHED_PASSWORD in .env}
       - DEFAULT_WORKSPACE=/repos #optional
       - PWA_APPNAME=code-server #optional
     volumes:

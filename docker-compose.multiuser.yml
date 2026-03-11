@@ -1,0 +1,73 @@
+---
+services:
+  code-server-shiv:
+    image: lscr.io/linuxserver/code-server:4.110.0
+    container_name: code-server-shiv
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-Etc/UTC}
+      - HTTP_PROXY=${HTTP_PROXY:-}
+      - HTTPS_PROXY=${HTTPS_PROXY:-}
+      - NO_PROXY=${NO_PROXY:-127.0.0.1,localhost}
+      - http_proxy=${HTTP_PROXY:-}
+      - https_proxy=${HTTPS_PROXY:-}
+      - no_proxy=${NO_PROXY:-127.0.0.1,localhost}
+      - HASHED_PASSWORD=${CODE_SERVER_HASHED_PASSWORD_SHIV:?set CODE_SERVER_HASHED_PASSWORD_SHIV in .env.multiuser}
+      - DEFAULT_WORKSPACE=/repos
+      - PWA_APPNAME=code-server-shiv
+    volumes:
+      - ./users/shiv/config:/config
+      - ./users/shiv/repos:/repos
+      - ./vsix:/vsix:ro
+    ports:
+      - ${CODE_SERVER_BIND_IP:-127.0.0.1}:${CODE_SERVER_PORT_SHIV:-8443}:8443
+    restart: unless-stopped
+
+  code-server-dev:
+    image: lscr.io/linuxserver/code-server:4.110.0
+    container_name: code-server-dev
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-Etc/UTC}
+      - HTTP_PROXY=${HTTP_PROXY:-}
+      - HTTPS_PROXY=${HTTPS_PROXY:-}
+      - NO_PROXY=${NO_PROXY:-127.0.0.1,localhost}
+      - http_proxy=${HTTP_PROXY:-}
+      - https_proxy=${HTTPS_PROXY:-}
+      - no_proxy=${NO_PROXY:-127.0.0.1,localhost}
+      - HASHED_PASSWORD=${CODE_SERVER_HASHED_PASSWORD_DEV:?set CODE_SERVER_HASHED_PASSWORD_DEV in .env.multiuser}
+      - DEFAULT_WORKSPACE=/repos
+      - PWA_APPNAME=code-server-dev
+    volumes:
+      - ./users/dev/config:/config
+      - ./users/dev/repos:/repos
+      - ./vsix:/vsix:ro
+    ports:
+      - ${CODE_SERVER_BIND_IP:-127.0.0.1}:${CODE_SERVER_PORT_DEV:-8444}:8443
+    restart: unless-stopped
+
+  code-server-qa:
+    image: lscr.io/linuxserver/code-server:4.110.0
+    container_name: code-server-qa
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-Etc/UTC}
+      - HTTP_PROXY=${HTTP_PROXY:-}
+      - HTTPS_PROXY=${HTTPS_PROXY:-}
+      - NO_PROXY=${NO_PROXY:-127.0.0.1,localhost}
+      - http_proxy=${HTTP_PROXY:-}
+      - https_proxy=${HTTPS_PROXY:-}
+      - no_proxy=${NO_PROXY:-127.0.0.1,localhost}
+      - HASHED_PASSWORD=${CODE_SERVER_HASHED_PASSWORD_QA:?set CODE_SERVER_HASHED_PASSWORD_QA in .env.multiuser}
+      - DEFAULT_WORKSPACE=/repos
+      - PWA_APPNAME=code-server-qa
+    volumes:
+      - ./users/qa/config:/config
+      - ./users/qa/repos:/repos
+      - ./vsix:/vsix:ro
+    ports:
+      - ${CODE_SERVER_BIND_IP:-127.0.0.1}:${CODE_SERVER_PORT_QA:-8445}:8443
+    restart: unless-stopped

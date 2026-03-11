@@ -21,3 +21,18 @@ repos/*
 
 vsix/*
 !vsix/.gitkeep
+
+users/*/repos/*
+!users/*/repos/.gitkeep
+
+users/*/config/data/*
+!users/*/config/data/User/
+users/*/config/data/User/*
+!users/*/config/data/User/settings.json
+
+users/*/config/extensions/
+users/*/config/.cache/
+users/*/config/.cline/
+users/*/config/.local/
+users/*/config/.ssh/
+users/*/config/workspace/

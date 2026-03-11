@@ -9,7 +9,5 @@
   "security.workspace.trust.untrustedFiles": "prompt",
   "telemetry.telemetryLevel": "off",
   "telemetry.feedback.enabled": false,
-  "update.mode": "none",
-  "workbench.statusBar.visible": false,
-  "window.menuBarVisibility": "classic"
+  "update.mode": "none"
 }

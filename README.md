@@ -171,9 +171,40 @@ docker compose logs -f code-server
 docker exec -it code-server code-server --install-extension /vsix/your-extension.vsix
 ```
 
+## Multi-user setup
+
+Use [`docker-compose.multiuser.yml`](/f:/coder-server/docker-compose.multiuser.yml#L1) if each user needs an isolated editor, password, config, and repo mount.
+
+Included sample users:
+
+- `shiv` on port `8443`
+- `dev` on port `8444`
+- `qa` on port `8445`
+
+Each user gets:
+
+- `users/<name>/config` mounted to `/config`
+- `users/<name>/repos` mounted to `/repos`
+- shared read-only `vsix/` mounted to `/vsix`
+
+Bootstrap:
+
+```bash
+cp .env.multiuser.example .env.multiuser
+docker compose -f docker-compose.multiuser.yml --env-file .env.multiuser up -d
+```
+
+On Windows PowerShell:
+
+```powershell
+Copy-Item .env.multiuser.example .env.multiuser
+docker compose -f docker-compose.multiuser.yml --env-file .env.multiuser up -d
+```
+
 ## Notes
 
 - Put your projects in `repos/`. They will be available in the container at `/repos`.
 - Put downloaded `.vsix` files in `vsix/`. They will be available in the container at `/vsix`.
 - Installed extensions are runtime data and should stay out of Git.
 - If you want local-only access, keep `CODE_SERVER_BIND_IP=127.0.0.1`.
+- For Portainer deployment, see [`portainer/README.md`](/f:/coder-server/portainer/README.md#L1).
