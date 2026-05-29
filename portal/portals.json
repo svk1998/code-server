@@ -1,0 +1,62 @@
+{
+  "team": "ISWT Team",
+  "updated": "2026-05-29",
+  "portals": [
+    {
+      "id": "jira",
+      "name": "Jira",
+      "url": "https://jira.internal.iswt.local",
+      "category": "Project Management",
+      "description": "Sprint boards, backlog, and issue tracking for all ISWT squads."
+    },
+    {
+      "id": "confluence",
+      "name": "Confluence",
+      "url": "https://confluence.internal.iswt.local",
+      "category": "Documentation",
+      "description": "Team wiki, runbooks, onboarding guides, and architecture docs."
+    },
+    {
+      "id": "gitlab",
+      "name": "GitLab",
+      "url": "https://gitlab.internal.iswt.local",
+      "category": "Source Control",
+      "description": "Git repositories, merge requests, and code reviews."
+    },
+    {
+      "id": "jenkins",
+      "name": "Jenkins",
+      "url": "https://ci.internal.iswt.local",
+      "category": "CI/CD",
+      "description": "Build pipelines, deployments, and release automation."
+    },
+    {
+      "id": "grafana",
+      "name": "Grafana",
+      "url": "https://grafana.internal.iswt.local",
+      "category": "Monitoring",
+      "description": "Dashboards and metrics for services and infrastructure."
+    },
+    {
+      "id": "kibana",
+      "name": "Kibana",
+      "url": "https://logs.internal.iswt.local",
+      "category": "Monitoring",
+      "description": "Centralized log search and analysis across environments."
+    },
+    {
+      "id": "vault",
+      "name": "Vault",
+      "url": "https://vault.internal.iswt.local",
+      "category": "Security",
+      "description": "Secrets management and credential rotation."
+    },
+    {
+      "id": "portainer",
+      "name": "Portainer",
+      "url": "https://portainer.internal.iswt.local",
+      "category": "Infrastructure",
+      "description": "Container and stack management for the ISWT environment."
+    }
+  ]
+}
