@@ -1,0 +1,85 @@
+name: Register portal from issue
+
+on:
+  issues:
+    types: [opened, edited, labeled, reopened]
+
+permissions:
+  contents: write
+  issues: write
+
+# Only react to issues carrying the registration label
+jobs:
+  register:
+    if: contains(join(github.event.issue.labels.*.name, ','), 'portal-registration')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Parse issue and update portals.json
+        id: add
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: node .github/scripts/add-portal.mjs
+
+      - name: Commit and push
+        id: commit
+        if: steps.add.outputs.result == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- portal/portals.json; then
+            echo "No changes to commit."
+          else
+            git add portal/portals.json
+            git commit -m "Register portal: ${{ steps.add.outputs.name }} (#${{ github.event.issue.number }})"
+            git push
+          fi
+
+      - name: Comment & close (success)
+        if: steps.add.outputs.result == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const name = `${{ steps.add.outputs.name }}`;
+            const url = `${{ steps.add.outputs.url }}`;
+            const category = `${{ steps.add.outputs.category }}`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: [
+                `✅ **Registered "${name}"**`,
+                ``,
+                `- **URL:** ${url}`,
+                `- **Category:** ${category}`,
+                ``,
+                `It has been added to \`portal/portals.json\` and the portal site is redeploying. Thanks!`
+              ].join('\n')
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed',
+              state_reason: 'completed'
+            });
+
+      - name: Comment on failure
+        if: steps.add.outputs.result == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const message = `${{ steps.add.outputs.message }}`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `⚠️ I couldn't register this portal:\n\n> ${message}\n\nEdit the issue to fix it and I'll try again.`
+            });

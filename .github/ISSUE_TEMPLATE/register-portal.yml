@@ -1,0 +1,43 @@
+name: 🔗 Register a portal
+description: Add a new internal portal to the ISWT Team Portal
+title: "[Portal] "
+labels: ["portal-registration"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fill in the details below to register a new internal portal.
+        When you submit, a bot adds it to `portal/portals.json`, redeploys the
+        site, and closes this issue automatically.
+  - type: input
+    id: name
+    attributes:
+      label: Portal name
+      description: The display name shown on the card.
+      placeholder: Jira
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: Full link to the portal (https:// is added if you omit it).
+      placeholder: https://tool.internal.iswt.local
+    validations:
+      required: true
+  - type: input
+    id: category
+    attributes:
+      label: Category
+      description: Used for the filter chips. Leave blank for "Uncategorized".
+      placeholder: Monitoring
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A short sentence describing what this portal is for.
+      placeholder: Dashboards and metrics for services and infrastructure.
+    validations:
+      required: false
